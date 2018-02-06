@@ -1,0 +1,340 @@
+:lang: ja
+:doctype: book
+:toc: left
+:toclevels: 3
+:toc-title: 目次
+:sectnums:
+:sectnumlevels: 4
+:sectlinks:
+:imagesdir: ./images
+:icons: font
+:source-highlighter: coderay
+:example-caption: 例
+:table-caption: 表
+:figure-caption: 図
+:docname: = mikutterプラグイン覚書
+:author: あひる
+
+= mikutterプラグイン覚書
+
+[mikutter_settings]
+== 設定
+
+[mikutter_settings_source]
+=== ソース
+http://mikutter.blogspot.jp/2012/12/blog-post.html[設定をつけよう]
+
+[mikutter_settings_types_and_usage]
+=== 設定の種類とその書き方
+UserConfigのキーを引数に持つ項目は、そのキーを使って設定値を呼び出す +
+例えばキーを+++sample_key+++とした場合は
+[source, ruby]
+----
+UserConfig[:sample_key]
+----
+と呼び出せばよい +
+なお、UserConfigは値のセットもできる
+[source, ruby]
+----
+UserConfig[:sample_key] = "Sample Value"
+----
+
+==== settings
+* 概要
++
+枠で囲む +
+
+* 書式
++
+[source, ruby]
+----
+settings(入力欄の説明)
+----
+
+* サンプルコード
++
+[source,ruby]
+----
+# Slackプラグインの場合
+settings('sample_settings') do
+  # ここに各種設定項目
+end
+----
+
+==== input
+* 概要
++
+一行テキストを追加する +
+
+* 書式
++
+[source, ruby]
+----
+input(入力欄の説明, :UserConfigのキー)
+----
+
+* サンプルコード
++
+[source,ruby]
+----
+settings('sample_settings') do
+  input('ログイン名', :sample_user_id)
+end
+----
+
+==== inputpass
+* 概要
++
+パスワードの入力欄を追加する +
+
+* 書式
++
+[source, ruby]
+----
+inputpass(入力欄の説明, :UserConfigのキー)
+----
+
+* サンプルコード
++
+[source,ruby]
+----
+settings('sample_settings') do
+  inputpass('パスワード', :sample_user_password)
+end
+----
+
+==== multi
+* 概要
++
+複数テキスト。ユーザはテキストボックスを追加ボタンで増やすことができ、各ボックスの値が配列に格納される +
+
+* 書式
++
+[source, ruby]
+----
+multi(入力欄の説明, :UserConfigのキー)
+----
+
+* サンプルコード
++
+[source,ruby]
+----
+settings('sample_settings') do
+  # TODO: implement
+end
+----
+
+
+==== multitext
+* 概要
++
+複数行のテキスト +
+
+* 書式
++
+[source, ruby]
+----
+multitext(入力欄の説明, :UserConfigのキー)
+----
+
+* サンプルコード
++
+[source,ruby]
+----
+settings('sample_settings') do
+  # TODO: implement
+end
+----
+
+==== select
+* 概要
++
+ハッシュの値から一つの要素を選択する +
+表示されるのはHashの値だが、格納されるのはキーの方 +
+普通はコンボボックスだけど、bodyにウィジェットを入れたらラジオボタンになる +
+
+* 書式
++
+[source, ruby]
+----
+select(入力欄の説明, :UserConfigのキー, ハッシュ, body)
+----
+
+* サンプルコード
++
+[source,ruby]
+----
+settings('sample_settings') do
+  # TODO: implement
+end
+----
+
+==== multiselect
+* 概要
++
+引数: L,C,o,&body	+
+select ウィジェットの複数選択奴 +
+選ばれた値がすべて配列で格納される +
+bodyにウィジェットがあればチェックボックスになる +
+
+* 書式
++
+[source, ruby]
+----
+select(入力欄の説明, :UserConfigのキー, ハッシュ, body)
+----
+
+* サンプルコード
++
+[source,ruby]
+----
+settings('sample_settings') do
+  # TODO: implement
+end
+----
+
+
+==== fileselect
+* 概要
++
+ファイル選択 +
+設定にはファイルの絶対パスが文字列で入る +
+dirはダイアログが最初に開くディレクトリで省略可
+
+* 書式
++
+[source, ruby]
+----
+fileselect(入力欄の説明, :UserConfigのキー, 最初のディレクトリ名)
+----
+
+* サンプルコード
++
+[source,ruby]
+----
+settings('sample_settings') do
+  # TODO: implement
+end
+----
+
+==== adjustment
+* 概要
++
+minからmaxまでの数値
+
+* 書式
++
+[source, ruby]
+----
+adjustment(入力欄の説明, :UserConfigのキー, min, max)
+----
+
+* サンプルコード
++
+[source,ruby]
+----
+settings('sample_settings') do
+  adjustment('取得件数', :sample_adjustment, 0, 200)
+end
+----
+
+==== boolean
+* 概要
++
+チェックボックス +
+チェックが入ってる状態がtrue
+
+* 書式
++
+[source, ruby]
+----
+adjustment(入力欄の説明, :UserConfigのキー, min, max)
+----
+
+* サンプルコード
++
+[source,ruby]
+----
+settings('sample_settings') do
+  boolean('お知らせを表示する', :sample_show_notification)
+end
+----
+
+==== color
+* 概要
++
+色選択ダイアログ +
+[RRRR,GGGG,BBBB]のような配列で値を保持する +
+各要素の最大値は0xFFFF
+
+* 書式
++
+[source, ruby]
+----
+color(入力欄の説明, :UserConfigのキー)
+----
+
+* サンプルコード
++
+[source,ruby]
+----
+settings('sample_settings') do
+  boolean('お知らせを表示する', :sample_show_notification)
+end
+----
+
+==== fontcolor
+* 概要
++
+フォントとその色を設定する +
+fのキーにフォントの情報が文字列で、cのキーには color ウィジェットと同じように
+
+* 書式
++
+[source, ruby]
+----
+color(入力欄の説明, フォント情報, color)
+----
+
+* サンプルコード
++
+[source,ruby]
+----
+settings('sample_settings') do
+  boolean('お知らせを表示する', :sample_show_notification)
+end
+----
+    引数: L, f, c
+
+    フォントと色。fのキーにフォントの情報が文字列で、cのキーには color ウィジェットと同じように
+
+==== about
+* 概要
++
+プラグインのクレジット表記 +
+
+* 書式
++
+[source, ruby]
+----
+about(入力欄の説明, options)
+----
+
+* サンプルコード
++
+[source,ruby]
+----
+# Slackプラグインの場合
+settings('sample_settings') do
+  about('%s について' % "sample app",
+        program_name: "sample app",
+        copyright: '2016-2018 ahiru',
+        version: "0.0.1",
+        comments: "mikutter pluginのサンプル",
+        license: (file_get_contents('./LICENSE') rescue nil),
+        website: 'https://...',
+        authors: %w[ahiru3net],
+        artists: %w[ahiru3net],
+        documenters: %w[ahiru3net])
+end
+----
