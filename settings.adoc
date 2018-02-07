@@ -324,7 +324,6 @@ about(入力欄の説明, options)
 +
 [source,ruby]
 ----
-# Slackプラグインの場合
 settings('sample_settings') do
   about('%s について' % "sample app",
         program_name: "sample app",
