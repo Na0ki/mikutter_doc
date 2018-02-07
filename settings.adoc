@@ -26,19 +26,19 @@ http://mikutter.blogspot.jp/2012/12/blog-post.html[設定をつけよう]
 
 [mikutter_settings_types_and_usage]
 === 設定の種類とその書き方
-UserConfigのキーを引数に持つ項目は、そのキーを使って設定値を呼び出す +
-例えばキーを+++sample_key+++とした場合は
+<<mikutter_settings_summary, settings>>においてUserConfigのキーを引数に持つ項目は、
+そのキーを使って設定値を取り出すことができる +
+例えばキーを+++:sample_key+++とした場合は
 [source, ruby]
 ----
 UserConfig[:sample_key]
 ----
-と呼び出せばよい +
-なお、UserConfigは値のセットもできる
-[source, ruby]
-----
-UserConfig[:sample_key] = "Sample Value"
-----
+と書けばよい +
+UserConfigの詳細については
+link:https://reference.mikutter.hachune.net/basis/2017/08/12/userconfig.html[Writing mikutter plugin]
+を参考にすること
 
+[mikutter_settings_summary]
 ==== settings
 * 概要
 +
@@ -53,11 +53,28 @@ settings(入力欄の説明)
 
 * サンプルコード
 +
+- 基本系
++
 [source,ruby]
 ----
 # Slackプラグインの場合
 settings('sample_settings') do
   # ここに各種設定項目
+end
+----
+
+- 入れ子
++
+settingsは入れ子にもできる
++
+[source,ruby]
+----
+# Slackプラグインの場合
+settings('sample_settings') do
+  # ここに各種設定項目
+  settings('sample_notification_settings') do
+    # ここに各種設定項目
+  end
 end
 ----
 
@@ -86,6 +103,7 @@ end
 * 概要
 +
 パスワードの入力欄を追加する +
+入力欄では文字が +++*+++ になる
 
 * 書式
 +
