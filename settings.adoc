@@ -338,6 +338,19 @@ end
 about(入力欄の説明, options)
 ----
 
+* オプション一覧
++
+name:: ソフトウェア名
+version:: バージョン
+copyright:: コピーライト
+comments:: コメント
+license:: ライセンス
+website:: Webページ
+logo:: ロゴ画像のフルパス
+authors:: 作者の名前（文字列配列）
+artists:: デザイナとかの名前（文字列配列）
+documenters:: ドキュメントかいた人とかの名前（文字列配列）
+
 * サンプルコード
 +
 [source,ruby]
@@ -351,7 +364,7 @@ settings('sample_settings') do
         license: (file_get_contents('./LICENSE') rescue nil),
         website: 'https://...',
         authors: %w[ahiru3net],
-        artists: %w[ahiru3net],
-        documenters: %w[ahiru3net])
+        artists: %w[foo],
+        documenters: %w[ahiru3net hoge foo])
 end
 ----
