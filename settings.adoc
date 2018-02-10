@@ -138,7 +138,7 @@ multi(入力欄の説明, :UserConfigのキー)
 [source,ruby]
 ----
 settings('sample_settings') do
-  # TODO: implement
+  multi('複数テキスト', :sample_settings_multi)
 end
 ----
 
@@ -160,7 +160,7 @@ multitext(入力欄の説明, :UserConfigのキー)
 [source,ruby]
 ----
 settings('sample_settings') do
-  # TODO: implement
+  multitext('複数行のテキスト', :sample_settings_multitext)
 end
 ----
 
@@ -169,13 +169,15 @@ end
 +
 ハッシュの値から一つの要素を選択する +
 表示されるのはHashの値だが、格納されるのはキーの方 +
-普通はコンボボックスだけど、bodyにウィジェットを入れたらラジオボタンになる +
+普通はコンボボックスだが、bodyにウィジェットを入れたらラジオボタンになる +
 
 * 書式
 +
 [source, ruby]
 ----
-select(入力欄の説明, :UserConfigのキー, ハッシュ, body)
+select(入力欄の説明, :UserConfigのキー, ハッシュ) do
+  # body
+end
 ----
 
 * サンプルコード
@@ -183,14 +185,14 @@ select(入力欄の説明, :UserConfigのキー, ハッシュ, body)
 [source,ruby]
 ----
 settings('sample_settings') do
-  # TODO: implement
+  hash = { 0 => '上', 1 => '下', 2 => '左', 3 => '右' }
+  select('セレクト', :sample_settings_select, hash)
 end
 ----
 
 ==== multiselect
 * 概要
 +
-引数: L,C,o,&body	+
 select ウィジェットの複数選択奴 +
 選ばれた値がすべて配列で格納される +
 bodyにウィジェットがあればチェックボックスになる +
@@ -199,7 +201,9 @@ bodyにウィジェットがあればチェックボックスになる +
 +
 [source, ruby]
 ----
-select(入力欄の説明, :UserConfigのキー, ハッシュ, body)
+multiselect(入力欄の説明, :UserConfigのキー) do
+  # body
+end
 ----
 
 * サンプルコード
@@ -207,7 +211,14 @@ select(入力欄の説明, :UserConfigのキー, ハッシュ, body)
 [source,ruby]
 ----
 settings('sample_settings') do
-  # TODO: implement
+  multiselect('複数セレクト', :sample_settings_multiselect) do
+    option(:opt1, 'オプション1') do
+      hash = {0 => 'opt1', 1 => 'opt2'}
+      select('複数セレクト内オプション', :opt1_select, hash)
+    end
+    option(:opt2, 'オプション2')
+    option(:opt3, 'オプション3')
+  end
 end
 ----
 
@@ -231,14 +242,15 @@ fileselect(入力欄の説明, :UserConfigのキー, 最初のディレクトリ
 [source,ruby]
 ----
 settings('sample_settings') do
-  # TODO: implement
+  fileselect('ファイルの取得', :sample_settings_fileselect)
+  fileselect('ファイルの取得（パス指定あり）', :sample_settings_fileselect, '/')
 end
 ----
 
 ==== adjustment
 * 概要
 +
-minからmaxまでの数値
+minからmaxまでの数値の設定
 
 * 書式
 +
@@ -259,14 +271,13 @@ end
 ==== boolean
 * 概要
 +
-チェックボックス +
-チェックが入ってる状態がtrue
+チェックボックス
 
 * 書式
 +
 [source, ruby]
 ----
-adjustment(入力欄の説明, :UserConfigのキー, min, max)
+boolean(入力欄の説明, :UserConfigのキー)
 ----
 
 * サンプルコード
@@ -278,6 +289,7 @@ settings('sample_settings') do
 end
 ----
 
+[[mikutter_sample_settings_color]]
 ==== color
 * 概要
 +
@@ -297,7 +309,7 @@ color(入力欄の説明, :UserConfigのキー)
 [source,ruby]
 ----
 settings('sample_settings') do
-  boolean('お知らせを表示する', :sample_show_notification)
+  color('色を設定', :sample_color)
 end
 ----
 
@@ -305,13 +317,14 @@ end
 * 概要
 +
 フォントとその色を設定する +
-fのキーにフォントの情報が文字列で、cのキーには color ウィジェットと同じように
+フォントキーの値にフォントの情報が文字列で、
+カラーキーの値には <<mikutter_sample_settings_color, colorウィジェット>> の値が格納される
 
 * 書式
 +
 [source, ruby]
 ----
-color(入力欄の説明, フォント情報, color)
+fontcolor(入力欄の説明, :UserConfigのキー（フォント）, :UserConfigのキー（色）)
 ----
 
 * サンプルコード
@@ -319,12 +332,9 @@ color(入力欄の説明, フォント情報, color)
 [source,ruby]
 ----
 settings('sample_settings') do
-  boolean('お知らせを表示する', :sample_show_notification)
+  fontcolor('フォント設定', :sample_fontcolor_font, :sample_fontcolor_color)
 end
 ----
-    引数: L, f, c
-
-    フォントと色。fのキーにフォントの情報が文字列で、cのキーには color ウィジェットと同じように
 
 ==== about
 * 概要
@@ -340,7 +350,7 @@ about(入力欄の説明, options)
 
 * オプション一覧
 +
-name:: ソフトウェア名
+program_name:: ソフトウェア名
 version:: バージョン
 copyright:: コピーライト
 comments:: コメント
@@ -363,8 +373,28 @@ settings('sample_settings') do
         comments: "mikutter pluginのサンプル",
         license: (file_get_contents('./LICENSE') rescue nil),
         website: 'https://...',
+        logo: 'path/to/logo',
         authors: %w[ahiru3net],
         artists: %w[foo],
         documenters: %w[ahiru3net hoge foo])
 end
 ----
+
+==== ツールチップ
+各設定コンポーネントに +++.tooltip()+++ をチェーンすることで、
+その設定にツールチップを追加できる
+
+* サンプルコード
++
+[source,ruby]
+----
+settings('sample_settings') do
+  input('ツールチップ用input', :sample_settings_input)
+    .tooltip('inputにホバーしてると表示される')
+end
+----
+
+=== サンプルプラグイン
+以下のプラグインをインストール・実行することで設定画面に全ての設定項目を確認できます。
+
+https://github.com/Na0ki/mikutter_sample_settings[mikutter_sample_settings]
