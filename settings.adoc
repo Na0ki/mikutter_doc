@@ -381,7 +381,7 @@ end
 ----
 
 ==== ツールチップ
-各設定コンポーネントに +++.tooltip()+++ をチェーンすることで、
+各設定コンポーネントに +++.tooltip()+++ をチェーンすることで、
 その設定にツールチップを追加できる
 
 * サンプルコード
@@ -390,7 +390,7 @@ end
 ----
 settings('sample_settings') do
   input('ツールチップ用input', :sample_settings_input)
-    .tooltip('inputにホバーしてると表示される')
+    .tooltip('inputにホバーしてると表示される')
 end
 ----
 
